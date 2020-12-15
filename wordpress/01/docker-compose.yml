@@ -1,0 +1,25 @@
+version: "3"
+services:
+  WP:
+    image: wordpress
+    environment:
+      - WORDPRESS_DB_HOST=DB
+      - WORDPRESS_DB_USER=userwp
+      - WORDPRESS_DB_PASSWORD=passwp
+      - WORDPRESS_DB_NAME=exampledb
+    volumes:
+      - ./wordpress:/var/www/html 
+    ports:
+      - "8099:80" 
+    restart: always
+
+  DB:
+    image: mysql:5.7
+    restart: always
+    environment:
+      - MYSQL_DATABASE=exampledb
+      - MYSQL_USER=userwp
+      - MYSQL_PASSWORD=passwp
+      - MYSQL_ROOT_PASSWORD=12345
+    volumes:
+      - ./db:/var/lib/mysql
