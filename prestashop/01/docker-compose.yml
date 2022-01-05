@@ -1,7 +1,7 @@
 version: "3"
 services:
   PS:
-    image: prestashop/prestashop
+    image: prestashop/prestashop:1.7.8.2
     volumes:
       - ./data:/var/www/html 
     ports:
