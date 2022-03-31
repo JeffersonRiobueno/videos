@@ -1,0 +1,64 @@
+version: "3"
+services:
+  PS:
+    image: prestashop/prestashop:1.7.8.2
+    volumes:
+      - ./data:/var/www/html 
+    restart: always
+    environment:
+      - DB_SERVER=MYSQL
+      - DB_USER=userps
+      - DB_PASSWD=passps
+      - DB_NAME=exampledb
+      - PS_DOMAIN=YOUR_DOMAIN
+      - PS_INSTALL_AUTO=1
+      - PS_ENABLE_SSL=1
+      - VIRTUAL_HOST=YOUR_DOMAIN
+      - LETSENCRYPT_HOST=YOUR_DOMAIN
+      - LETSENCRYPT_EMAIL=riobueno.jr@gmail.com
+    depends_on:
+      - DB
+
+
+  DB:
+    image: mysql:5.7
+    restart: always
+    container_name: MYSQL
+    environment:
+      - MYSQL_DATABASE=exampledb
+      - MYSQL_USER=userps
+      - MYSQL_PASSWORD=passps
+      - MYSQL_ROOT_PASSWORD=12345
+    volumes:
+      - ./db:/var/lib/mysql
+  
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - certs:/etc/nginx/certs
+      - vhostd:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - ./nginx-custom.conf:/etc/nginx/conf.d/custom.conf:ro
+    labels:
+      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    restart: always
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+    volumes:
+      - certs:/etc/nginx/certs:rw
+      - vhostd:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+volumes:
+  certs:
+  vhostd:
+  html:
