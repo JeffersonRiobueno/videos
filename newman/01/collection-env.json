@@ -1,0 +1,39 @@
+{
+	"info": {
+		"_postman_id": "9a038e76-54c0-4aca-9311-81b8145ef7e3",
+		"name": "cocktail",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12725424"
+	},
+	"item": [
+		{
+			"name": "cocteles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "www.thecocktaildb.com/api/json/v1/1/search.php?s={{bebida}}",
+					"host": [
+						"www",
+						"thecocktaildb",
+						"com"
+					],
+					"path": [
+						"api",
+						"json",
+						"v1",
+						"1",
+						"search.php"
+					],
+					"query": [
+						{
+							"key": "s",
+							"value": "{{bebida}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

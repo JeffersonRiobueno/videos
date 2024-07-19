@@ -1,0 +1,10 @@
+{
+  "id": "my-environment",
+  "values": [
+    {
+      "key": "bebida",
+      "value": "margarita",
+      "enabled": true
+    }
+  ]
+}
