@@ -1,0 +1,17 @@
+# Usa la imagen base de Node.js
+FROM node:14-alpine
+
+# Establece el directorio de trabajo
+WORKDIR /usr/src/app
+
+# Copia package.json y package-lock.json
+COPY package*.json ./
+
+# Instala newman y el reporter de CSV
+RUN npm install -g newman newman-reporter-csv
+
+# Copia el resto de los archivos
+COPY . .
+
+# Comando por defecto para ejecutar newman
+CMD ["newman", "run", "your_collection.json", "-r", "csv", "--reporter-csv-export", "output.csv"]

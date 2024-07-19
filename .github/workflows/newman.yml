@@ -14,4 +14,4 @@ jobs:
     - name: Install Newman
       run: npm install -g newman
     - name: Run Newman
-      run: newman run newman/01/collection.json
+      run: newman run newman/01/collection-env.json -d newman/01/data.csv

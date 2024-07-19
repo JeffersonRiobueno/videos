@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  newman:
+    build: .
+    volumes:
+      - .:/usr/src/app
+    command: ping 9.9.9.9
